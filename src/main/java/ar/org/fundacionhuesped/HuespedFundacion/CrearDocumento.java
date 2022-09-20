@@ -28,6 +28,8 @@ public class CrearDocumento {
 			
 	public static void main(String[] args)throws IOException {
 		
+	
+		
 		//Creación de variables locales
 		ArrayList <String> listaDeCorreos = new ArrayList<String>();
 		String remitente = "noeliasabraham@gmail.com"; 
@@ -44,7 +46,7 @@ public class CrearDocumento {
 		Splitter splitter = new Splitter();  
 		List<PDDocument>Pages = splitter.split(document);  
 		          
-		//Recorre la lista de documentos
+		//Recorre la lista 
 		Iterator<PDDocument>iterator = Pages.listIterator(); 
 		      
 		//Guarda cada página como un documento individual
@@ -58,7 +60,8 @@ public class CrearDocumento {
 		    String direccionCorreo = nombreSolo[0].toLowerCase() + "@" + "gmail.com"; 
 		        
 		    //Guarda cada archivo PDF con el nombre del Empleade 
-		    pd.save("Empleade" + nombreSolo[0].toString() + ".pdf"); 
+		    pd.save("Empleade" + nombreSolo[0].toString() + ".pdf");
+		    
 
 		    //Guarda las direcciones de correo en el ArrayList
 		    listaDeCorreos.add(direccionCorreo);
@@ -66,8 +69,14 @@ public class CrearDocumento {
 		    
 		}
 		document.close();
+		
+		enviarDesdeGmail (remitente, contraseñaRemitente, listaDeCorreos); 
+		
+	}
 
 	/* PARA ENVIAR CORREOS CON ADJUNTOS */
+		
+		private static void enviarDesdeGmail (String remitente, String contraseñaRemitente, ArrayList <String> listaDeCorreos) {
 		
 		try {
 			Iterator <String> iterarListaCorreos = listaDeCorreos.iterator();
@@ -79,7 +88,7 @@ public class CrearDocumento {
 	    
 				// se obtienen las propiedades del sistema
 				Properties props = new Properties();
-				props.put("mail.smtp.host", "smtp.gmail.com"); //El servidor SMTP de Google
+				props.put("mail.smtp.ssl.trust", "smtp.gmail.com"); //El servidor SMTP de Google
 				props.setProperty("mail.smtp.starttls.enable", "true"); //Para conectar de manera segura al servidor SMTP
 				props.setProperty("mail.smtp.port", "587"); //El puerto SMTP seguro de Google
 				props.setProperty("mail.smtp.user", remitente); //Remitente o Cuenta origen
@@ -118,7 +127,7 @@ public class CrearDocumento {
 				// Transport: clase encargada de enviar el correo.
 				//1.Se obtiene un objeto Transport para el protocolo indicado:
 				Transport t = session.getTransport("smtp");
-				t.connect(remitente, contraseñaRemitente);
+				t.connect("smtp.gmail.com", remitente, contraseñaRemitente);
 				t.sendMessage(message, message.getAllRecipients());
 				System.out.println ("¡Correo enviado a " + correoDestinatarie + "!"); 
 				t.close();
@@ -128,5 +137,4 @@ public class CrearDocumento {
 			System .out.println( "Error en el envío de correo: " + e);
 		}
 	}
-	
 }
