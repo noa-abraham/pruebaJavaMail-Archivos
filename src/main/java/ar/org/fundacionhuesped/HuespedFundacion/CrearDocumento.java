@@ -36,7 +36,7 @@ public class CrearDocumento {
 	
 		//Carga de pdf existente   
 		File file = new File("Nombres.pdf");   
-		PDDocument document = PDDocument.load(file);   
+		PDDocument document = PDDocument.load(file);  
 
 		// Crea instancia de la clase  Splitter
 		//Divide las páginas del PDF y las devuelve en forma de lista
