@@ -24,18 +24,15 @@ import javax.mail.internet.MimeMultipart;
 import java.util.ArrayList;
 import java.util.Iterator;  
 
-public class CrearDocumento {
+public class CrearDocumentoyEnvio {
 			
 	public static void main(String[] args)throws IOException {
-		
-	
-		
-		//Creación de variables locales
+
 		ArrayList <String> listaDeCorreos = new ArrayList<String>();
-		String remitente = "noeliasabraham@gmail.com"; 
-		String contraseñaRemitente = "wvokcydocncviqrl";
+		String remitente = "noeliasabraham@gmail.com"; //completar con la dirección de correo
+		String passwordRemitente = "wvokcydocncviqrl"; //completar con la contraseña de 16 caracteres
 		
-		/* PARA EXTRAER PÁG. DEL PDF, GUARDARLAS COMO DOCUMENTOS NUEVOS Y TOMAR LA INFORMACIÓN DE LOS MISMOS */
+		/* PARA EXTRAER PAG. DEL PDF, GUARDARLAS COMO DOCUMENTOS NUEVOS Y TOMAR LA INFORMACIÓN DE LOS MISMOS */
 	
 		//Carga de pdf existente   
 		File file = new File("Nombres.pdf");   
@@ -62,7 +59,6 @@ public class CrearDocumento {
 		    //Guarda cada archivo PDF con el nombre del Empleade 
 		    pd.save("Empleade" + nombreSolo[0].toString() + ".pdf");
 		    
-
 		    //Guarda las direcciones de correo en el ArrayList
 		    listaDeCorreos.add(direccionCorreo);
 		    System.out.println (direccionCorreo);
@@ -70,13 +66,13 @@ public class CrearDocumento {
 		}
 		document.close();
 		
-		enviarDesdeGmail (remitente, contraseñaRemitente, listaDeCorreos); 
+		enviarDesdeGmail (remitente, passwordRemitente, listaDeCorreos); 
 		
 	}
 
 	/* PARA ENVIAR CORREOS CON ADJUNTOS */
 		
-		private static void enviarDesdeGmail (String remitente, String contraseñaRemitente, ArrayList <String> listaDeCorreos) {
+		private static void enviarDesdeGmail (String remitente, String passwordRemitente, ArrayList <String> listaDeCorreos) {
 		
 		try {
 			Iterator <String> iterarListaCorreos = listaDeCorreos.iterator();
@@ -86,7 +82,7 @@ public class CrearDocumento {
 				correoDestinatarie = iterarListaCorreos.next(); 
 			
 	    
-				// se obtienen las propiedades del sistema
+				// //Establece la dirección IP del host y habilita la autenticación
 				Properties props = new Properties();
 				props.put("mail.smtp.ssl.trust", "smtp.gmail.com"); //El servidor SMTP de Google
 				props.setProperty("mail.smtp.starttls.enable", "true"); //Para conectar de manera segura al servidor SMTP
@@ -103,6 +99,8 @@ public class CrearDocumento {
 				//Texto del mensaje
 				BodyPart texto = new MimeBodyPart();
 				texto.setText("Texto del mensaje");
+				
+				
 
 				//Adjuntar el archivo
 				BodyPart adjunto = new MimeBodyPart();
@@ -115,7 +113,8 @@ public class CrearDocumento {
 				multiParte.addBodyPart(texto);
 				multiParte.addBodyPart(adjunto);
 
-				//Message: clase abstracta que modela el mensaje con sus atributos (to, from, subject y el contenido.
+				//Message: clase abstracta que modela el mensaje con sus atributos.
+				//Establece la dirección de remitente y destinatario
 				//MimeMessage hereda de Message y permite incluir adjuntos, imágenes, ect. 
 				MimeMessage message = new MimeMessage(session);
 				message.setFrom(new InternetAddress(remitente));
@@ -124,10 +123,10 @@ public class CrearDocumento {
 				message.setSubject("Envio con adjunto");
 				message.setContent(multiParte);
 
-				// Transport: clase encargada de enviar el correo.
-				//1.Se obtiene un objeto Transport para el protocolo indicado:
+				//Transport: clase encargada de enviar el correo.
+				//Se realiza  la conexión dando usuarix -correo de la cuenta que estemos usando- y la clave.
 				Transport t = session.getTransport("smtp");
-				t.connect("smtp.gmail.com", remitente, contraseñaRemitente);
+				t.connect("smtp.gmail.com", remitente, passwordRemitente);
 				t.sendMessage(message, message.getAllRecipients());
 				System.out.println ("¡Correo enviado a " + correoDestinatarie + "!"); 
 				t.close();
