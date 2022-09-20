@@ -20,6 +20,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+
 import java.util.ArrayList;
 import java.util.Iterator;  
 
@@ -97,7 +98,7 @@ public class CrearDocumento {
 				//Adjuntar el archivo
 				BodyPart adjunto = new MimeBodyPart();
 				adjunto.setDataHandler(
-						new DataHandler(new FileDataSource("C:\\Users\\noeli\\eclipse-workspace\\HuespedFundacion\\Nombres.pdf")));
+						new DataHandler(new FileDataSource("Nombres.pdf")));
 				adjunto.setFileName("Nombres.pdf");
 
 				//Una MultiParte para agrupar texto y archivo adjunto
@@ -108,7 +109,7 @@ public class CrearDocumento {
 				//Message: clase abstracta que modela el mensaje con sus atributos (to, from, subject y el contenido.
 				//MimeMessage hereda de Message y permite incluir adjuntos, imágenes, ect. 
 				MimeMessage message = new MimeMessage(session);
-				message.setFrom(new InternetAddress(remitente ));
+				message.setFrom(new InternetAddress(remitente));
 				message.addRecipient(Message.RecipientType.TO, new InternetAddress(correoDestinatarie)); 
 				//varios destinatarios pero de a 1
 				message.setSubject("Envio con adjunto");
@@ -119,10 +120,13 @@ public class CrearDocumento {
 				Transport t = session.getTransport("smtp");
 				t.connect(remitente, contraseñaRemitente);
 				t.sendMessage(message, message.getAllRecipients());
+				System.out.println ("¡Correo enviado a " + correoDestinatarie + "!"); 
 				t.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			System .out.println( "Error en el envío de correo: " + e);
 		}
 	}
+	
 }

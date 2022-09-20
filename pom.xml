@@ -26,6 +26,18 @@
       <scope>test</scope>
     </dependency>
     
+    <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>javax.mail</artifactId>
+      <version>1.6.0</version>
+</dependency>
+<dependency>
+     <groupId>javax</groupId>
+     <artifactId>javaee-api</artifactId>
+     <version>8.0</version>
+     <scope>provided</scope>
+ </dependency>
+   
     <dependency>  
 <groupId>org.apache.pdfbox</groupId>  
 <artifactId>pdfbox</artifactId>  
