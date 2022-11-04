@@ -1,4 +1,4 @@
-## DOCUMENTACIÓN PRUEBA TÉCNICA FUNDACIÓN HUÉSPED
+## TRABAJO CON ARCHIVOS Y CORREO-JAVA-EJERCICIO
 Noelia Abraham
 
 **LENGUAJE:** JAVA
@@ -83,7 +83,4 @@ Crear clases y relaciones: Clase Empleade, Clase Empleadore, Clase ExtraerPDF, C
 
 Implementar el uso de otros servidores.
 
-Aclaración: en este momento el programa logra leer el pdf, obtener los datos del mismo, generar nuevos archivos con su nombre correspondiente y obtener y crear la dirección de email a partir del primer nombre. También permite el envio a las casillas. Sin embargo, no envia el adjunto que le corresponde a cada empleade. Sinceramente, no pude resolver esta parte por falta de tiempo.
 
-Gracias por la oportunidad y el tiempo!
-Saludos, Noelia. 
